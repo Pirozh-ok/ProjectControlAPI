@@ -1,0 +1,43 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ProjectControlAPI.DataAccess.Entities;
+
+namespace ProjectControlAPI.DataAccess.EntitiesConfigurations
+{
+    internal class WorkerConfig : IEntityTypeConfiguration<Worker>
+    {
+        public void Configure(EntityTypeBuilder<Worker> builder)
+        {
+            builder
+                .HasKey(x => x.Id);
+            builder
+                .HasIndex(x => x.Mail)
+                .IsUnique();
+
+            builder.Property(x => x.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+            builder.Property(x => x.FirstName)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(x => x.LastName)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(x => x.Patronymic)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(x => x.Mail)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder
+                .HasMany(w => w.Projects)
+                .WithMany(p => p.Workers)
+                .
+        }
+    }
+}
