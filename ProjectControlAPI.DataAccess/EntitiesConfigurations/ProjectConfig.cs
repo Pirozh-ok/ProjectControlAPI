@@ -19,16 +19,23 @@ namespace ProjectControlAPI.DataAccess.EntitiesConfigurations
                 .HasMaxLength(100)
                 .IsRequired();
 
+            builder.Property(x => x.CustomerCompanyName)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            builder.Property(x => x.ExecutorCompanyName)
+                .HasMaxLength(100)
+                .IsRequired();
+
             builder.Property(x => x.StartDate)
                 .IsRequired(); 
 
             builder.Property(x => x.EndDate)
-                .IsRequired(); 
+                .IsRequired();
 
             builder
                 .HasMany(x => x.Workers)
-                .WithOne(x => x.)
-
+                .WithMany(x => x.Projects);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ProjectControlAPI.DataAccess.Entities;
 
 namespace ProjectControlAPI.Presentation.Controllers
 {

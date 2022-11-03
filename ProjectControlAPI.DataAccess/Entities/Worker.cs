@@ -13,10 +13,6 @@
         public string Patronymic { get; set; }
         public string Mail { get; set; }
 
-        // Worker company
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
-
         // Worker projects
         public ICollection<Project> Projects { get; set; }
     }

@@ -36,8 +36,7 @@ namespace ProjectControlAPI.DataAccess.EntitiesConfigurations
 
             builder
                 .HasMany(w => w.Projects)
-                .WithMany(p => p.Workers)
-                .
+                .WithMany(p => p.Workers); 
         }
     }
 }
