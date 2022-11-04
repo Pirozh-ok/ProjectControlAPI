@@ -1,14 +1,14 @@
+using ProjectControlAPI.BusinessLogic.Services;
 using ProjectControlAPI.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(); 
+builder.Services.AddDbContext<DataContext>();
+builder.Services.AddService();
 
 var app = builder.Build();
 

@@ -19,10 +19,11 @@ namespace ProjectControlAPI.DataAccess
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Worker> Workers { get; set; }
+        public DbSet<WorkerProject> WorkerProject { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=ProjectControl; Persist Security Info = false; User ID='sa';Password='sa'; MultipleActiveResultSets = True; Trusted_Connection=False;");
+            optionsBuilder.UseSqlServer(_connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +31,7 @@ namespace ProjectControlAPI.DataAccess
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new WorkerConfig());
             modelBuilder.ApplyConfiguration(new ProjectConfig());
+            modelBuilder.ApplyConfiguration(new WorkerProjectConfig());
         }
     }
 }

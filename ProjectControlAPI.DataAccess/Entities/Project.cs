@@ -4,7 +4,7 @@
     {
         public Project()
         {
-            Workers = new HashSet<Worker>();
+            WorkerProject = new HashSet<WorkerProject>();
         }
 
         public int Id { get; set; }
@@ -16,10 +16,6 @@
         public int Priority { get; set; }
 
         // Project staff
-        public ICollection<Worker> Workers { get; set; }
-
-        // Project manager
-        public int ProjectManagerId { get; set; }
-        public Worker ProjectManager { get; set; }
+        public ICollection<WorkerProject> WorkerProject { get; set; }
     }
 }

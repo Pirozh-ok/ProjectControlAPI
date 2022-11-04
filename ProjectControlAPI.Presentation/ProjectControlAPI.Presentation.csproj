@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectControlAPI.BusinessLogic\ProjectControlAPI.BusinessLogic.csproj" />
     <ProjectReference Include="..\ProjectControlAPI.DataAccess\ProjectControlAPI.DataAccess.csproj" />
   </ItemGroup>
 

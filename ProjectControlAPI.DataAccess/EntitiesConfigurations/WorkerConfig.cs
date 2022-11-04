@@ -35,8 +35,9 @@ namespace ProjectControlAPI.DataAccess.EntitiesConfigurations
                 .IsRequired();
 
             builder
-                .HasMany(w => w.Projects)
-                .WithMany(p => p.Workers); 
+                .HasMany(w => w.WorkerProject)
+                .WithOne(wp => wp.Worker)
+                .HasForeignKey(wp => wp.WorkerId);
         }
     }
 }

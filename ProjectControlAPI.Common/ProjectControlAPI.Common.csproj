@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectControlAPI.Common\ProjectControlAPI.Common.csproj" />
     <ProjectReference Include="..\ProjectControlAPI.DataAccess\ProjectControlAPI.DataAccess.csproj" />
   </ItemGroup>
 

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectControlAPI.DataAccess", "ProjectControlAPI.DataAccess\ProjectControlAPI.DataAccess.csproj", "{9838EF1A-4FE2-4E87-A73E-4CE93527A655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectControlAPI.DataAccess", "ProjectControlAPI.DataAccess\ProjectControlAPI.DataAccess.csproj", "{9838EF1A-4FE2-4E87-A73E-4CE93527A655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectControlAPI.BusinessLogic", "ProjectControlAPI.BusinessLogic\ProjectControlAPI.BusinessLogic.csproj", "{D6020251-B9D2-40F3-A2F9-60205F0F4DA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectControlAPI.BusinessLogic", "ProjectControlAPI.BusinessLogic\ProjectControlAPI.BusinessLogic.csproj", "{D6020251-B9D2-40F3-A2F9-60205F0F4DA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectControlAPI.Presentation", "ProjectControlAPI.Presentation\ProjectControlAPI.Presentation.csproj", "{B445DDF1-B242-49BA-B0BC-58CD223DA211}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectControlAPI.Presentation", "ProjectControlAPI.Presentation\ProjectControlAPI.Presentation.csproj", "{B445DDF1-B242-49BA-B0BC-58CD223DA211}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectControlAPI.Common", "ProjectControlAPI.Common\ProjectControlAPI.Common.csproj", "{23DBB129-B750-4177-B0ED-316AB4B2C86C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{B445DDF1-B242-49BA-B0BC-58CD223DA211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B445DDF1-B242-49BA-B0BC-58CD223DA211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B445DDF1-B242-49BA-B0BC-58CD223DA211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23DBB129-B750-4177-B0ED-316AB4B2C86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23DBB129-B750-4177-B0ED-316AB4B2C86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23DBB129-B750-4177-B0ED-316AB4B2C86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23DBB129-B750-4177-B0ED-316AB4B2C86C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
