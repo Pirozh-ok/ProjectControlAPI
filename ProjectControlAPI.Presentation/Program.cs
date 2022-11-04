@@ -1,4 +1,5 @@
 using ProjectControlAPI.BusinessLogic.Services;
+using ProjectControlAPI.Common.Mapping;
 using ProjectControlAPI.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddService();
+builder.Services.AddAutoMapper(); 
 
 var app = builder.Build();
 
