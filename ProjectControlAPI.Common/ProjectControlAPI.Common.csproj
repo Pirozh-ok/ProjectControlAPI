@@ -20,12 +20,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProjectMessageResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resource\WorkerMessageResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WorkerMessageResource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Resource\ProjectMessageResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProjectMessageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resource\WorkerMessageResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WorkerMessageResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

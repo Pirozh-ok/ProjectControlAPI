@@ -10,7 +10,6 @@ namespace ProjectControlAPI.Common.Mapping
         {
             CreateMap<Project, GetProjectDTO>();
             CreateMap<CreateProjectDTO, Project>();
-            CreateMap<UpdateProjectDTO, Project>();
         }
     }
 }

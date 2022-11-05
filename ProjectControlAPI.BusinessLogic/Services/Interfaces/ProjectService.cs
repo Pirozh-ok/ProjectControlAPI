@@ -25,7 +25,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
         {
             var projectToAdd = _mapper.Map<Project>(project);
 
-            GuardIncorrectProjectData(projectToAdd);
+            GuardIncorrectProjectData(projectToAdd);   
             
             await _context.Projects.AddAsync(projectToAdd);
             await _context.SaveChangesAsync(); 
