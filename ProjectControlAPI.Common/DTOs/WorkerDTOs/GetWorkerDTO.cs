@@ -1,4 +1,4 @@
-﻿namespace ProjectControlAPI.Common.DTOs
+﻿namespace ProjectControlAPI.Common.DTOs.WorkerDTOs
 {
     public class GetWorkerDTO
     {

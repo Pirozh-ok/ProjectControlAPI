@@ -9,6 +9,7 @@ namespace ProjectControlAPI.BusinessLogic.Services
         public static void AddService(this IServiceCollection services)
         {
             services.AddScoped<IWorkerService, WorkerService>(); 
+            services.AddScoped<IProjectService, ProjectService>();
         }
     }
 }

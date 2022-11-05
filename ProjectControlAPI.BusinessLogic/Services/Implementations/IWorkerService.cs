@@ -1,4 +1,4 @@
-﻿using ProjectControlAPI.Common.DTOs;
+﻿using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 
 namespace ProjectControlAPI.BusinessLogic.Services.Implementations
 {

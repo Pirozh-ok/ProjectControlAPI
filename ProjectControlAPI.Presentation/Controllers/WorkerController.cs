@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
-using ProjectControlAPI.Common.DTOs;
+using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 
 namespace ProjectControlAPI.Presentation.Controllers
 {
@@ -17,7 +17,7 @@ namespace ProjectControlAPI.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetWorkerByIdAsync(int id)
+        public async Task<IActionResult> GetWorkerById(int id)
         {
             return Ok(await _workerService.GetByIdAsync(id)); 
         }

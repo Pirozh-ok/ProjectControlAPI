@@ -2,7 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
-using ProjectControlAPI.Common.DTOs;
+using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.Common.Exceptions;
 using ProjectControlAPI.DataAccess;
 using ProjectControlAPI.DataAccess.Entities;
@@ -22,7 +22,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
         public async Task CreateAsync(CreateWorkerDTO worker)
         {
-            GuardIncorrectData(worker);
+            await GuardIncorrectData(worker);
 
             var workerToAdd = _mapper.Map<Worker>(worker);
             await _context.Workers.AddAsync(workerToAdd);
@@ -34,12 +34,9 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             var worker = await _context.Workers
                 .SingleOrDefaultAsync(x => x.Id == workerId);
 
-            if(worker is null)
-            {
-                throw new NotFoundException("Worker is not found"); 
-            }
+            GuardNotFound(worker);
 
-            _context.Workers.Remove(worker);
+            _context.Workers.Remove(worker!);
             await _context.SaveChangesAsync();
         }
 
@@ -55,28 +52,19 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             var worker = await _context.Workers
                 .SingleOrDefaultAsync(x => x.Id == workerId);
 
-            if(worker is null)
-            {
-                throw new NotFoundException("Worker is not found");
-            }
+            GuardNotFound(worker);
 
             return _mapper.Map<GetWorkerDTO>(worker); 
         }
 
         public async Task UpdateAsync(UpdateWorkerDTO worker)
         {
-            if(worker is null)
-            {
-                throw new BadRequestException("Arguments is null"); 
-            }
+            GuardNullArgument(worker);
 
             var workerToUpdate = await _context.Workers
-                .SingleOrDefaultAsync(x => x.Id == worker.WorkerId);
+                .SingleOrDefaultAsync(x => x.Id == worker.Id);
 
-            if (workerToUpdate is null)
-            {
-                throw new NotFoundException("Worker not found");
-            }
+            GuardNotFound(workerToUpdate); 
 
             if (!string.IsNullOrWhiteSpace(worker.FirstName))
             {
@@ -101,7 +89,23 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             await _context.SaveChangesAsync();
         }
 
-        private void GuardIncorrectData(CreateWorkerDTO worker)
+        private void GuardNullArgument<T>(T arg)
+        {
+            if (arg is null)
+            {
+                throw new BadRequestException("Argument is null");
+            }
+        }
+
+        private void GuardNotFound(Worker? worker)
+        {
+            if (worker is null)
+            {
+                throw new NotFoundException("Worker is not found");
+            }
+        }
+
+        private async Task GuardIncorrectData(CreateWorkerDTO worker)
         {
             if (worker is null)
             {
@@ -113,9 +117,19 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
                 throw new BadRequestException("Incorrect FirstName");
             }
 
+            if (worker.FirstName.Length > 50)
+            {
+                throw new BadRequestException("The first name exceeds 100 characters");
+            }
+
             if (string.IsNullOrWhiteSpace(worker.LastName))
             {
                 throw new BadRequestException("Incorrect LastName");
+            }
+
+            if (worker.LastName.Length > 50)
+            {
+                throw new BadRequestException("The last name exceeds 100 characters");
             }
 
             if (string.IsNullOrWhiteSpace(worker.Patronymic))
@@ -123,9 +137,24 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
                 throw new BadRequestException("Incorrect Patronymic");
             }
 
+            if (worker.Patronymic.Length > 50)
+            {
+                throw new BadRequestException("The patronymic exceeds 100 characters");
+            }
+
             if (string.IsNullOrWhiteSpace(worker.Mail))
             {
                 throw new BadRequestException("Incorrect Mail");
+            }
+
+            if (worker.Mail.Length > 50)
+            {
+                throw new BadRequestException("The mail exceeds 100 characters");
+            }
+
+            if(await _context.Workers.SingleOrDefaultAsync(x => x.Mail == worker.Mail) is not null)
+            {
+                throw new BadRequestException("A worker with this mail already exists");
             }
         }
     }

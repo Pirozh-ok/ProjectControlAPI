@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ProjectControlAPI.Common.DTOs;
+using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.DataAccess.Entities;
 
 namespace ProjectControlAPI.Common.Mapping
