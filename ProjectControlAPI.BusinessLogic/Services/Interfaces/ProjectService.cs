@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
 using ProjectControlAPI.Common.DTOs.ProjectDTOs;
+using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.Common.Exceptions;
 using ProjectControlAPI.Common.Resource;
 using ProjectControlAPI.DataAccess;
@@ -59,6 +60,26 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             return _mapper.Map<GetProjectDTO>(project);
         }
 
+        public async Task<IEnumerable<GetWorkerDTO>> GetWorkersByProject(int projectId)
+        {
+            var project = await _context.Projects
+               .SingleOrDefaultAsync(x => x.Id == projectId);
+
+            GuardNotFound(project);
+
+            var workersId = await _context.WorkerProject
+                .Where(x => x.ProjectId == projectId)
+                .AsNoTracking()
+                .Select(x => x.WorkerId)
+                .ToListAsync();
+
+            return await _context.Workers
+                .Where(x => workersId.Contains(x.Id))
+                .AsNoTracking()
+                .ProjectTo<GetWorkerDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
         public async Task UpdateAsync(UpdateProjectDTO project)
         {
             GuardNullArgument(project);
@@ -99,6 +120,47 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             }
 
             GuardIncorrectProjectData(projectToUpdate);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddWorkerOnProject(int projectId, int workerId)
+        {
+            if (await _context.Projects.AnyAsync(x => x.Id == projectId))
+            {
+                throw new NotFoundException("Project not found");
+            }
+
+            if (await _context.Workers.AnyAsync(x => x.Id == workerId))
+            {
+                throw new NotFoundException("Worker not found");
+            }
+
+            if (await _context.WorkerProject.AnyAsync(x => x.WorkerId == workerId && x.ProjectId == projectId))
+            {
+                throw new BadRequestException("Worker already added to project");
+            }
+
+            await _context.WorkerProject.AddAsync(
+                new WorkerProject
+                {
+                    WorkerId = workerId,
+                    ProjectId = projectId,
+                });
+
+            await _context.SaveChangesAsync(); 
+        }
+
+        public async Task RemoveWorkerFromProject(int projectId, int workerId)
+        {
+            var removeString = await _context.WorkerProject
+                .SingleOrDefaultAsync(x => x.WorkerId == workerId && x.ProjectId == projectId);
+
+            if(removeString is null)
+            {
+                throw new BadRequestException("Not found");
+            }
+
+            _context.WorkerProject.Remove(removeString);
             await _context.SaveChangesAsync();
         }
 
@@ -146,7 +208,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
         {
             if (start > end)
             {
-                throw new BadRequestException(ProjectMessageResource.StartMoreEnd);
+                throw new BadRequestException(ProjectMessageResource.EndLessStart);
             }
         }
 

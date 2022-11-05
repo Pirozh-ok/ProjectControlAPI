@@ -61,6 +61,15 @@ namespace ProjectControlAPI.Common.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на End date cannot be less than start date.
+        /// </summary>
+        public static string EndLessStart {
+            get {
+                return ResourceManager.GetString("EndLessStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Incorrect customer company name.
         /// </summary>
         public static string IncorrectCustomerCompany {
@@ -156,15 +165,6 @@ namespace ProjectControlAPI.Common.Resource {
         public static string NullArgument {
             get {
                 return ResourceManager.GetString("NullArgument", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на The start date of the project is greater than the end date.
-        /// </summary>
-        public static string StartMoreEnd {
-            get {
-                return ResourceManager.GetString("StartMoreEnd", resourceCulture);
             }
         }
     }

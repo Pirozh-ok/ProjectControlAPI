@@ -1,4 +1,5 @@
-﻿using ProjectControlAPI.Common.DTOs.WorkerDTOs;
+﻿using ProjectControlAPI.Common.DTOs.ProjectDTOs;
+using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 
 namespace ProjectControlAPI.BusinessLogic.Services.Implementations
 {
@@ -8,6 +9,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Implementations
         Task UpdateAsync(UpdateWorkerDTO worker);
         Task DeleteAsync(int workerId);
         Task<GetWorkerDTO> GetByIdAsync(int workerId);
-        Task<IEnumerable<GetWorkerDTO>> GetAllAsync(); 
+        Task<IEnumerable<GetWorkerDTO>> GetAllAsync();
+        Task<IEnumerable<GetProjectDTO>> GetProjectsByWorker(int workerId);
     }
 }

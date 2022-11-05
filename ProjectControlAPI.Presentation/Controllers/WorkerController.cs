@@ -48,5 +48,11 @@ namespace ProjectControlAPI.Presentation.Controllers
         {
             return Ok(await _workerService.GetAllAsync());
         }
+
+        [HttpGet("{id}/projects")]
+        public async Task<IActionResult> GetWorkerProjects(int id)
+        {
+            return Ok(await _workerService.GetProjectsByWorker(id));
+        }
     }
 }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EndLessStart" xml:space="preserve">
+    <value>End date cannot be less than start date</value>
+  </data>
   <data name="IncorrectCustomerCompany" xml:space="preserve">
     <value>Incorrect customer company name</value>
   </data>
@@ -149,8 +152,5 @@
   </data>
   <data name="NullArgument" xml:space="preserve">
     <value>Argument is null</value>
-  </data>
-  <data name="StartMoreEnd" xml:space="preserve">
-    <value>The start date of the project is greater than the end date</value>
   </data>
 </root>

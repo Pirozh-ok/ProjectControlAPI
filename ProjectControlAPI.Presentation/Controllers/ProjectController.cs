@@ -35,6 +35,26 @@ namespace ProjectControlAPI.Presentation.Controllers
             return Ok(await _projectService.GetByIdAsync(id));
         }
 
+        [HttpGet("{id}/workers")]
+        public async Task<IActionResult> GetWorkersByProject(int id)
+        {
+            return Ok(await _projectService.GetWorkersByProject(id));
+        }
+
+        [HttpPost("{id}/add-worker")]
+        public async Task<IActionResult> AddWorkerToProject(int id, [FromQuery] int workerId)
+        {
+            await _projectService.AddWorkerOnProject(id, workerId);
+            return StatusCode(201);
+        }
+
+        [HttpDelete("{id}/remove-worker")]
+        public async Task<IActionResult> RemoveWorkerToProject(int id, [FromQuery] int workerId)
+        {
+            await _projectService.RemoveWorkerFromProject(id, workerId);
+            return StatusCode(201);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetProjects()
         {

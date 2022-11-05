@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
+using ProjectControlAPI.Common.DTOs.ProjectDTOs;
 using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.Common.Exceptions;
 using ProjectControlAPI.Common.Resource;
@@ -47,12 +48,14 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
         {
             return await _context.Workers
                 .ProjectTo<GetWorkerDTO>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<GetWorkerDTO> GetByIdAsync(int workerId)
         {
             var worker = await _context.Workers
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == workerId);
 
             GuardNotFound(worker);
@@ -94,6 +97,26 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<GetProjectDTO>> GetProjectsByWorker(int workerId)
+        {
+            var worker = await _context.Workers
+                .SingleOrDefaultAsync(x => x.Id == workerId);
+
+            GuardNotFound(worker);
+
+            var projectsId = await _context.WorkerProject
+                .Where(x => x.WorkerId == workerId)
+                .AsNoTracking()
+                .Select(x => x.ProjectId)
+                .ToListAsync();
+
+            return await _context.Projects
+                .Where(x => projectsId.Contains(x.Id))
+                .AsNoTracking()
+                .ProjectTo<GetProjectDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync(); 
+        }
+
         private void GuardNullArgument<T>(T arg)
         {
             if (arg is null)
@@ -128,7 +151,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
         private async Task GuardMailAlreadyExistAsync(string mail)
         {
-            if (await _context.Workers.SingleOrDefaultAsync(x => x.Mail == mail) is not null)
+            if (!await _context.Workers.AnyAsync(x => x.Mail == mail))
             {
                 throw new BadRequestException(WorkerMessageResource.MailAlreadyExists);
             }
