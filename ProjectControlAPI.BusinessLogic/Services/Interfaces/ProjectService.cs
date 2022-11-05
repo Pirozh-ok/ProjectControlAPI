@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using ProjectControlAPI.BusinessLogic.Services.Extensions;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
 using ProjectControlAPI.Common.DTOs.ProjectDTOs;
 using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.Common.Exceptions;
+using ProjectControlAPI.Common.QueryParameters;
 using ProjectControlAPI.Common.Resource;
 using ProjectControlAPI.DataAccess;
 using ProjectControlAPI.DataAccess.Entities;
@@ -43,11 +45,18 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<GetProjectDTO>> GetAllAsync()
+        public async Task<IEnumerable<GetProjectDTO>> GetAllAsync(ProjectsParameters projectsParameters)
         {
-            return await _context.Projects
+            var projects = await _context.Projects
                 .ProjectTo<GetProjectDTO>(_mapper.ConfigurationProvider)
-                .ToListAsync(); 
+                .Where(x => x.StartDate.Year >= projectsParameters.MinYearOfStart
+                && x.StartDate.Year <= projectsParameters.MaxYearOfStart
+                && x.EndDate.Year >= projectsParameters.MinYearOfEnd
+                && x.EndDate.Year <= projectsParameters.MaxYearOfEnd
+                && x.Priority <= projectsParameters.MaxPriority)
+                .ToListAsync();
+                
+            return projects.OrderByField(projectsParameters.OrderBy); 
         }
 
         public async Task<GetProjectDTO> GetByIdAsync(int projectId)

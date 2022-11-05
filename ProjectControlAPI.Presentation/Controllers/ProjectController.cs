@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
 using ProjectControlAPI.Common.DTOs.ProjectDTOs;
+using ProjectControlAPI.Common.QueryParameters;
 
 namespace ProjectControlAPI.Presentation.Controllers
 {
@@ -56,9 +57,9 @@ namespace ProjectControlAPI.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProjects()
+        public async Task<IActionResult> GetProjects([FromQuery] ProjectsParameters projectsParameters)
         {
-            return Ok(await _projectService.GetAllAsync());
+            return Ok(await _projectService.GetAllAsync(projectsParameters));
         }
 
         [HttpPut]

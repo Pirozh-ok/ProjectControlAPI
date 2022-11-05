@@ -1,4 +1,4 @@
-using ProjectControlAPI.BusinessLogic.Services;
+using ProjectControlAPI.BusinessLogic.Services.Extensions;
 using ProjectControlAPI.Common.Mapping;
 using ProjectControlAPI.DataAccess;
 
