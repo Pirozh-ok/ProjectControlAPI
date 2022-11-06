@@ -37,6 +37,12 @@ namespace ProjectControlAPI.DataAccess.EntitiesConfigurations
                .HasMany(p => p.WorkerProject)
                .WithOne(wp => wp.Project)
                .HasForeignKey(wp => wp.ProjectId);
+
+            builder
+                .HasMany(p => p.Tasks)
+                .WithOne(t => t.Project)
+                .HasForeignKey(t => t.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

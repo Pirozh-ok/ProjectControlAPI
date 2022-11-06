@@ -5,6 +5,7 @@
         public Project()
         {
             WorkerProject = new HashSet<WorkerProject>();
+            Tasks = new HashSet<TaskProject>();
         }
 
         public int Id { get; set; }
@@ -17,5 +18,8 @@
 
         // Project staff
         public ICollection<WorkerProject> WorkerProject { get; set; }
+        
+        // Project tasks
+        public ICollection<TaskProject> Tasks { get; set; }
     }
 }
