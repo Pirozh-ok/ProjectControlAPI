@@ -20,6 +20,7 @@ namespace ProjectControlAPI.DataAccess
         public DbSet<Project> Projects { get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<WorkerProject> WorkerProject { get; set; }
+        public DbSet<TaskProject> TaskProject { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

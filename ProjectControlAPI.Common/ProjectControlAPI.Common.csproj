@@ -20,6 +20,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProjectMessageResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resource\TaskMessageResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TaskMessageResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resource\WorkerMessageResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -31,6 +36,10 @@
     <EmbeddedResource Update="Resource\ProjectMessageResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProjectMessageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resource\TaskMessageResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskMessageResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resource\WorkerMessageResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

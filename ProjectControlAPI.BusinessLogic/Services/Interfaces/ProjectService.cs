@@ -49,6 +49,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
         {
             var projects = await _context.Projects
                 .ProjectTo<GetProjectDTO>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
                 .Where(x => x.StartDate.Year >= projectsParameters.MinYearOfStart
                 && x.StartDate.Year <= projectsParameters.MaxYearOfStart
                 && x.EndDate.Year >= projectsParameters.MinYearOfEnd
@@ -100,32 +101,32 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
             if (!string.IsNullOrWhiteSpace(project.Name))
             {
-                projectToUpdate.Name = project.Name;
+                projectToUpdate!.Name = project.Name;
             }
 
             if (!string.IsNullOrWhiteSpace(project.CustomerCompanyName))
             {
-                projectToUpdate.CustomerCompanyName = project.CustomerCompanyName;
+                projectToUpdate!.CustomerCompanyName = project.CustomerCompanyName;
             }
 
             if (!string.IsNullOrWhiteSpace(project.ExecutorCompanyName))
             {
-                projectToUpdate.ExecutorCompanyName = project.ExecutorCompanyName;
+                projectToUpdate!.ExecutorCompanyName = project.ExecutorCompanyName;
             }
 
             if (project.StartDate is not null)
             {
-                projectToUpdate.StartDate = (DateTime)project.StartDate;
+                projectToUpdate!.StartDate = (DateTime)project.StartDate;
             }
 
             if (project.EndDate is not null)
             {
-                projectToUpdate.EndDate = (DateTime)project.EndDate;
+                projectToUpdate!.EndDate = (DateTime)project.EndDate;
             }
 
             if (project.Priority is not null)
             {
-                projectToUpdate.Priority = (int)project.Priority;
+                projectToUpdate!.Priority = (int)project.Priority;
             }
 
             GuardIncorrectProjectData(projectToUpdate);

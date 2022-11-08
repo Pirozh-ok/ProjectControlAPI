@@ -10,7 +10,8 @@ namespace ProjectControlAPI.Common.Mapping
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new WorkerProfile());
-                mc.AddProfile(new ProjectProfile()); 
+                mc.AddProfile(new ProjectProfile());
+                mc.AddProfile(new TaskProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

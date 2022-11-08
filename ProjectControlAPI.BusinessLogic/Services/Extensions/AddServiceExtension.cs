@@ -10,6 +10,8 @@ namespace ProjectControlAPI.BusinessLogic.Services.Extensions
         {
             services.AddScoped<IWorkerService, WorkerService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskService, TaskService>();
+
         }
     }
 }
