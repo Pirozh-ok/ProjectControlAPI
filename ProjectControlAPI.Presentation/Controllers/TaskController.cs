@@ -41,7 +41,11 @@ namespace ProjectControlAPI.Presentation.Controllers
             return Ok(await _taskService.GetAllAsync());
         }
 
-        //[HttpPut]
-        //public async 
+        [HttpPut]
+        public async Task<IActionResult> UpdateTask([FromBody] UpdateTaskDTO task)
+        {
+            await _taskService.UpdateAsync(task);
+            return StatusCode(204);
+        }
     }
 }
