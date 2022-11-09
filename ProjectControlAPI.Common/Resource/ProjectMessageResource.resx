@@ -153,4 +153,7 @@
   <data name="NullArgument" xml:space="preserve">
     <value>Argument is null</value>
   </data>
+  <data name="WorkerAlreadyAdded" xml:space="preserve">
+    <value>Worker already added to project</value>
+  </data>
 </root>

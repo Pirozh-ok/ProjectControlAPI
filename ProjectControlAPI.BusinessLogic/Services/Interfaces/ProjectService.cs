@@ -152,19 +152,19 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
         public async Task AddWorkerOnProject(int projectId, int workerId)
         {
-            if (await _context.Projects.AnyAsync(x => x.Id == projectId))
+            if (!await _context.Projects.AnyAsync(x => x.Id == projectId))
             {
-                throw new NotFoundException("Project not found");
+                throw new NotFoundException(ProjectMessageResource.NotFound);
             }
 
-            if (await _context.Workers.AnyAsync(x => x.Id == workerId))
+            if (!await _context.Workers.AnyAsync(x => x.Id == workerId))
             {
-                throw new NotFoundException("Worker not found");
+                throw new NotFoundException(WorkerMessageResource.NotFound);
             }
 
             if (await _context.WorkerProject.AnyAsync(x => x.WorkerId == workerId && x.ProjectId == projectId))
             {
-                throw new BadRequestException("Worker already added to project");
+                throw new BadRequestException(ProjectMessageResource.WorkerAlreadyAdded);
             }
 
             await _context.WorkerProject.AddAsync(

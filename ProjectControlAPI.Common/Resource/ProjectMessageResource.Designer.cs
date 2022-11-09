@@ -167,5 +167,14 @@ namespace ProjectControlAPI.Common.Resource {
                 return ResourceManager.GetString("NullArgument", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Worker already added to project.
+        /// </summary>
+        public static string WorkerAlreadyAdded {
+            get {
+                return ResourceManager.GetString("WorkerAlreadyAdded", resourceCulture);
+            }
+        }
     }
 }
