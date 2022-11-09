@@ -56,6 +56,7 @@ namespace ProjectControlAPI.Presentation.Controllers
         }
 
         [HttpGet("{id}/perfome-tasks")]
+
         public async Task<IActionResult> GetPerfomeTasksByWorker(int id)
         {
             return Ok(await _workerService.GetPerfomeTasksByWorkerAsync(id));

@@ -182,7 +182,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
         private async Task GuardMailAlreadyExistAsync(string mail)
         {
-            if (!await _context.Workers.AnyAsync(x => x.Mail == mail))
+            if (await _context.Workers.AnyAsync(x => x.Mail == mail))
             {
                 throw new BadRequestException(WorkerMessageResource.MailAlreadyExists);
             }

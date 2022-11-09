@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>();
+builder.Services.AddDbConnection(builder.Configuration);
 builder.Services.AddService();
 builder.Services.AddAutoMapper();
 
