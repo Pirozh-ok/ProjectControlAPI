@@ -10,5 +10,6 @@ namespace ProjectControlAPI.BusinessLogic.Services.Implementations
         Task<IEnumerable<GetTaskDTO>> GetAllAsync(TaskParameters parameters);
         Task DeleteAsync(int taskId);
         Task UpdateAsync(UpdateTaskDTO task);
+        Task UpdateStatusAsync(UpdateStatusTaskDTO task);
     }
 }

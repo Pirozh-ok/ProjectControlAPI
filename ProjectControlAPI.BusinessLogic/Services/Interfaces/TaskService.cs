@@ -111,6 +111,20 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateStatusAsync(UpdateStatusTaskDTO task)
+        {
+            GuardNullArgument(task);
+
+            var taskToUpdate = await _context.TaskProject
+                .SingleOrDefaultAsync(x => x.Id == task.Id);
+
+            GuardNotFound(taskToUpdate);
+            GuardIncorrectStatus(task.Status);
+
+            taskToUpdate.Status = task.Status;
+            await _context.SaveChangesAsync(); 
+        }
+
         private void GuardIncorrectData(TaskProject task)
         {
             GuardNullArgument(task);

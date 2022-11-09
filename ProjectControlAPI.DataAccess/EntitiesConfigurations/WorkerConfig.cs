@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProjectControlAPI.DataAccess.Entities;
+using static ProjectControlAPI.DataAccess.Entities.Worker;
 
 namespace ProjectControlAPI.DataAccess.EntitiesConfigurations
 {
@@ -33,6 +34,9 @@ namespace ProjectControlAPI.DataAccess.EntitiesConfigurations
             builder.Property(x => x.Mail)
                 .HasMaxLength(50)
                 .IsRequired();
+
+            builder.Property(x => x.Role)
+                .HasDefaultValue(WorkerRole.Employee);
 
             builder
                 .HasMany(w => w.WorkerProject)

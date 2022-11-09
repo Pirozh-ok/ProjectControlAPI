@@ -23,6 +23,11 @@ namespace ProjectControlAPI.Presentation
                         statusCode = ((BadRequestException)context.Exception).ErrorCode;
                         break;
                     }
+                case AuthentificationException:
+                    {
+                        statusCode = ((AuthentificationException)context.Exception).ErrorCode;
+                        break;
+                    }
             }
 
             var exception = context.Exception;

@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
+using ProjectControlAPI.Common.DTOs;
 using ProjectControlAPI.Common.DTOs.ProjectDTOs;
 using ProjectControlAPI.Common.DTOs.TaskDTOs;
 using ProjectControlAPI.Common.DTOs.WorkerDTOs;
@@ -146,6 +147,24 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             {
                 throw new BadRequestException(WorkerMessageResource.NotFound);
             }
+        }
+
+        public async Task<AuthResponseDTO> SignInAsync(string mail)
+        {
+            var worker = await _context.Workers
+                .SingleOrDefaultAsync(x => x.Mail == mail);
+
+            if(worker is null)
+            {
+                throw new AuthentificationException("Authorization error");
+            }
+
+            return new AuthResponseDTO
+            {
+                Id = worker.Id,
+                Mail = worker.Mail,
+                Role = worker.Role
+            }; 
         }
 
         private void GuardNullArgument<T>(T arg)
