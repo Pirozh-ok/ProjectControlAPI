@@ -1,14 +1,11 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Moq;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
 using ProjectControlAPI.BusinessLogic.Services.Interfaces;
 using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.Common.Exceptions;
 using ProjectControlAPI.Common.Mapping;
 using ProjectControlAPI.DataAccess;
-using ProjectControlAPI.DataAccess.Entities;
 
 namespace ProjectControlAPI.TestBusinessLogic
 {

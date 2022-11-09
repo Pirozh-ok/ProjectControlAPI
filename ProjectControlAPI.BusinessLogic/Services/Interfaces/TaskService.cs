@@ -104,7 +104,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
             if (task.Priority is not null)
             {
-                task!.Priority = (int)task.Priority;
+                taskToUpdate!.Priority = (int)task.Priority;
             }
 
             GuardIncorrectData(taskToUpdate);
@@ -120,8 +120,10 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
             GuardIncorrectComment(task.Comment);
             GuardIncorrectStatus(task.Status);
+            GuardIncorrectPriority(task.Priority);
             GuardNotFoundAuthor(task.AuthorId);
             GuardNotFoundWorker(task.WorkerId);
+            GuardNotFoundProject(task.ProjectId);
         }
 
         private void GuardIncorrectComment(string comment)
@@ -147,7 +149,15 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
         {
             if (!_context.Workers.Any(x => x.Id == id))
             {
-                throw new BadRequestException(TaskMessageResource.NotFoundAuthor);
+                throw new NotFoundException(TaskMessageResource.NotFoundAuthor);
+            }
+        }
+
+        private void GuardNotFoundProject(int id)
+        {
+            if (!_context.Projects.Any(x => x.Id == id))
+            {
+                throw new NotFoundException(ProjectMessageResource.NotFound);
             }
         }
 
@@ -155,7 +165,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
         {
             if (id is not null && !_context.Workers.Any(x => x.Id == id))
             {
-                throw new BadRequestException(TaskMessageResource.NotFoundWorker);
+                throw new NotFoundException(TaskMessageResource.NotFoundWorker);
             }
         }
 
@@ -188,6 +198,14 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             if (str.Length > maxLen)
             {
                 throw new BadRequestException(message);
+            }
+        }
+
+        private void GuardIncorrectPriority(int priority)
+        {
+            if (priority < 0)
+            {
+                throw new BadRequestException(TaskMessageResource.IncorrectPriority);
             }
         }
     }
