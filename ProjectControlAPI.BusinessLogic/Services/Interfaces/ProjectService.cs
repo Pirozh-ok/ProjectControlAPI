@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectControlAPI.BusinessLogic.Services.Extensions;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
 using ProjectControlAPI.Common.DTOs.ProjectDTOs;
+using ProjectControlAPI.Common.DTOs.TaskDTOs;
 using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.Common.Exceptions;
 using ProjectControlAPI.Common.QueryParameters;
@@ -54,7 +55,8 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
                 && x.StartDate.Year <= projectsParameters.MaxYearOfStart
                 && x.EndDate.Year >= projectsParameters.MinYearOfEnd
                 && x.EndDate.Year <= projectsParameters.MaxYearOfEnd
-                && x.Priority <= projectsParameters.MaxPriority)
+                && x.Priority <= projectsParameters.MaxPriority
+                && x.Priority >= projectsParameters.MinPriority)
                 .ToListAsync();
                 
             return projects.OrderByField(projectsParameters.OrderBy); 
@@ -70,7 +72,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             return _mapper.Map<GetProjectDTO>(project);
         }
 
-        public async Task<IEnumerable<GetWorkerDTO>> GetWorkersByProject(int projectId)
+        public async Task<IEnumerable<GetWorkerDTO>> GetWorkersByProjectAsync(int projectId)
         {
             var project = await _context.Projects
                .SingleOrDefaultAsync(x => x.Id == projectId);
@@ -88,6 +90,21 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
                 .AsNoTracking()
                 .ProjectTo<GetWorkerDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<GetTaskDTO>> GetTasksByProjectAsync(int projectId)
+        {
+            if (await _context.Projects.AnyAsync(x => x.Id == projectId))
+            {
+                return await _context.TaskProject
+                    .Where(x => x.ProjectId == projectId)
+                    .ProjectTo<GetTaskDTO>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+            }
+            else
+            {
+                throw new BadRequestException(ProjectMessageResource.NotFound);
+            }
         }
 
         public async Task UpdateAsync(UpdateProjectDTO project)

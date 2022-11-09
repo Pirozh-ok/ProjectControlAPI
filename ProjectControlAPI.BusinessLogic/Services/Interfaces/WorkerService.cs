@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
 using ProjectControlAPI.Common.DTOs.ProjectDTOs;
+using ProjectControlAPI.Common.DTOs.TaskDTOs;
 using ProjectControlAPI.Common.DTOs.WorkerDTOs;
 using ProjectControlAPI.Common.Exceptions;
 using ProjectControlAPI.Common.Resource;
@@ -97,7 +98,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<GetProjectDTO>> GetProjectsByWorker(int workerId)
+        public async Task<IEnumerable<GetProjectDTO>> GetProjectsByWorkerAsync(int workerId)
         {
             var worker = await _context.Workers
                 .SingleOrDefaultAsync(x => x.Id == workerId);
@@ -115,6 +116,36 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
                 .AsNoTracking()
                 .ProjectTo<GetProjectDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync(); 
+        }
+
+        public async Task<IEnumerable<GetTaskDTO>> GetCreatedTasksByWorkerAsync(int workerId)
+        {
+            if (await _context.Workers.AnyAsync(x => x.Id == workerId))
+            {
+                return await _context.TaskProject
+                    .Where(x => x.AuthorId == workerId)
+                    .ProjectTo<GetTaskDTO>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+            }
+            else
+            {
+                throw new BadRequestException(WorkerMessageResource.NotFound);
+            }
+        }
+
+        public async Task<IEnumerable<GetTaskDTO>> GetPerfomeTasksByWorkerAsync(int workerId)
+        {
+            if (await _context.Workers.AnyAsync(x => x.Id == workerId))
+            {
+                return await _context.TaskProject
+                    .Where(x => x.WorkerId == workerId)
+                    .ProjectTo<GetTaskDTO>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+            }
+            else
+            {
+                throw new BadRequestException(WorkerMessageResource.NotFound);
+            }
         }
 
         private void GuardNullArgument<T>(T arg)

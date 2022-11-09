@@ -9,6 +9,7 @@
         public uint MaxYearOfEnd { get; set; } = uint.MaxValue; 
         public bool ValidYearEnd => MaxYearOfEnd > MinYearOfEnd;
         public uint MaxPriority { get; set; } = uint.MaxValue;
+        public uint MinPriority { get; set; } = uint.MinValue;
         public string OrderBy { get; set; } = "name asc"; 
     }
 }

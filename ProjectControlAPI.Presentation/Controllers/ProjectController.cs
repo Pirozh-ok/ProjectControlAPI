@@ -39,7 +39,13 @@ namespace ProjectControlAPI.Presentation.Controllers
         [HttpGet("{id}/workers")]
         public async Task<IActionResult> GetWorkersByProject(int id)
         {
-            return Ok(await _projectService.GetWorkersByProject(id));
+            return Ok(await _projectService.GetWorkersByProjectAsync(id));
+        }
+
+        [HttpGet("{id}/tasks")]
+        public async Task<IActionResult> GetTasksByProject(int id)
+        {
+            return Ok(await _projectService.GetTasksByProjectAsync(id)); 
         }
 
         [HttpPost("{id}/add-worker")]

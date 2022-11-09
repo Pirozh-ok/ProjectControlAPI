@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using ProjectControlAPI.BusinessLogic.Services.Extensions;
 using ProjectControlAPI.BusinessLogic.Services.Implementations;
 using ProjectControlAPI.Common.DTOs.TaskDTOs;
 using ProjectControlAPI.Common.Exceptions;
+using ProjectControlAPI.Common.QueryParameters;
 using ProjectControlAPI.Common.Resource;
 using ProjectControlAPI.DataAccess;
 using ProjectControlAPI.DataAccess.Entities;
@@ -52,12 +54,23 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<GetTaskDTO>> GetAllAsync()
+        public async Task<IEnumerable<GetTaskDTO>> GetAllAsync(TaskParameters parameters)
         {
-            return await _context.TaskProject              
+            var tasks =  await _context.TaskProject              
                 .ProjectTo<GetTaskDTO>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
-                .ToListAsync(); 
+                .Where(x => x.Priority <= parameters.MaxPriority
+                && x.Priority >= parameters.MinPriority)
+                .ToListAsync();
+            
+            if(parameters.Status is not null 
+                && parameters.Status >= Status.ToDo
+                && parameters.Status <= Status.Done)
+            {
+                tasks = tasks.Where(x => x.Status == parameters.Status).ToList();
+            }
+
+            return tasks.OrderByField(parameters.OrderBy);
         }
 
         public async Task UpdateAsync(UpdateTaskDTO task)
@@ -124,7 +137,7 @@ namespace ProjectControlAPI.BusinessLogic.Services.Interfaces
 
         private void GuardIncorrectStatus(Status status)
         {
-            if((int)status > 2 || (int)status < 0)
+            if(status > Status.Done || status < Status.ToDo)
             {
                 throw new BadRequestException(TaskMessageResource.IncorrectStatus);
             }
