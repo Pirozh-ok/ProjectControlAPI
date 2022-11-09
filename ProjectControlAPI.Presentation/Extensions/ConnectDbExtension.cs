@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjectControlAPI.DataAccess;
 
-namespace ProjectControlAPI.DataAccess
+namespace ProjectControlAPI.Presentation.Extensions
 {
     public static class ConnectDbExtension
     {

@@ -56,7 +56,7 @@ namespace ProjectControlAPI.Presentation.Controllers
         }
 
         [Authorize(Policy = "AllWorkers")]
-        [HttpPut]
+        [HttpPut("status")]
         public async Task<IActionResult> UpdateStatusTask([FromBody] UpdateStatusTaskDTO task)
         {
             await _taskService.UpdateStatusAsync(task);

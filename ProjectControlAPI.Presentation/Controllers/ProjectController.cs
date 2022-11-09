@@ -77,13 +77,6 @@ namespace ProjectControlAPI.Presentation.Controllers
             return Ok(await _projectService.GetAllAsync(projectsParameters));
         }
 
-        [Authorize(Policy = "AllWorker")]
-        [HttpGet("my")]
-        public async Task<IActionResult> GetMyProjects([FromQuery] ProjectsParameters projectsParameters)
-        {
-            return Ok(await _projectService.GetMyProjectsAsync(10, projectsParameters));
-        }
-
         [Authorize(Policy = "Director")]
         [HttpPut]
         public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectDTO project)

@@ -63,10 +63,10 @@ namespace ProjectControlAPI.Presentation.Controllers
         }
 
         [Authorize(Policy = "AllWorkers")]
-        [HttpGet("{id}/my-projects")]
+        [HttpGet("my-projects")]
         public async Task<IActionResult> GetMyProjects()
         {
-            var claim = HttpContext.User.Claims.First(c => c.Type == "NameIdentifier");
+            var claim = HttpContext.User.Claims.First(c => c.Type == @"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
             var id = int.Parse(claim.Value);
             return Ok(await _workerService.GetProjectsByWorkerAsync(id));
         }
